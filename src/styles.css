@@ -1,0 +1,177 @@
+@import "tailwindcss";
+
+/* ---------- Design tokens Dossenza (MIV 2026) ---------- */
+@theme {
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+
+  /* Base da marca */
+  --color-dz-espinafre: #173f35;
+  --color-dz-creme: #f6f0e4;
+  /* Expressão dos produtos */
+  --color-dz-terracota: #c56a4b;
+  --color-dz-azeitona: #68753d;
+  /* Acentos */
+  --color-dz-trigo: #d8be8d;
+  --color-dz-pitaya: #9e2850;
+  --color-dz-lilas: #b7a5cf;
+
+  /* Derivados (tons de apoio, fora da paleta oficial, só para superfícies e linhas) */
+  --color-dz-areia: #efe6d5;
+  --color-dz-linha: #e3d8c4;
+  --color-dz-musgo: #0f2d26;
+  --color-dz-tinta: #1b2a25;
+
+  --shadow-card: 0 10px 30px -12px rgba(23, 63, 53, 0.18);
+  --shadow-soft: 0 30px 70px -30px rgba(23, 63, 53, 0.35);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-dz-creme);
+    color: var(--color-dz-tinta);
+    font-family: var(--font-sans);
+    font-feature-settings: "liga", "kern";
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  ::selection {
+    background: var(--color-dz-trigo);
+    color: var(--color-dz-espinafre);
+  }
+}
+
+/* Texto em caixa alta com tracking largo (rótulos/eyebrows), como no MIV */
+@utility label-caps {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* Textura sutil de papel/grão (as ondas do MIV têm grão) */
+@utility grain {
+  position: relative;
+}
+.grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- Reveal animations ---------- */
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes reveal-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes image-zoom-in {
+  from {
+    opacity: 0;
+    transform: scale(1.02);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.reveal {
+  opacity: 0;
+  will-change: opacity, transform;
+}
+.reveal-up {
+  transform: translateY(16px);
+}
+.reveal.reveal-in {
+  animation: reveal-up 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.reveal.reveal-fade.reveal-in {
+  animation: reveal-fade 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.reveal[data-delay="1"].reveal-in {
+  animation-delay: 80ms;
+}
+.reveal[data-delay="2"].reveal-in {
+  animation-delay: 160ms;
+}
+.reveal[data-delay="3"].reveal-in {
+  animation-delay: 240ms;
+}
+.reveal[data-delay="4"].reveal-in {
+  animation-delay: 320ms;
+}
+.reveal[data-delay="5"].reveal-in {
+  animation-delay: 400ms;
+}
+.reveal[data-delay="6"].reveal-in {
+  animation-delay: 480ms;
+}
+
+.reveal-image-wrap {
+  position: relative;
+  overflow: hidden;
+}
+.reveal-image {
+  opacity: 0;
+}
+.reveal-image.reveal-in {
+  animation: image-zoom-in 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Ondas decorativas: flutuação lenta, bem discreta */
+@keyframes wave-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+.wave-float {
+  animation: wave-float 9s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-image {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .reveal.reveal-in,
+  .reveal-image.reveal-in,
+  .wave-float {
+    animation: none !important;
+  }
+}

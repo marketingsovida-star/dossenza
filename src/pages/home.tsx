@@ -136,8 +136,10 @@ function StickyHeader({ visible }: { visible: boolean }) {
 /* ---------- HERO ---------- */
 function Hero() {
   return (
-    <section id="inicio" className="relative overflow-hidden bg-dz-creme">
-      {/* Foto-banner (frascos à direita); no mobile a foto aparece abaixo do texto */}
+    <section id="inicio" className="relative overflow-hidden bg-dz-creme md:flex md:min-h-[56.25vw] md:flex-col">
+      {/* Foto-banner (frascos à direita); no mobile a foto aparece abaixo do texto.
+          md:min-h-[56.25vw] = proporção 16:9 da foto: a seção nunca fica mais baixa que a imagem,
+          então o cover não corta os frascos embaixo em telas largas (sobra só corte lateral, na parede). */}
       <div
         className="absolute inset-0 hidden bg-cover bg-no-repeat md:block md:bg-[position:right_center]"
         style={{ backgroundImage: `url('${asset("/waves/hero-banner.webp")}')` }}
@@ -149,7 +151,7 @@ function Hero() {
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto max-w-7xl px-6 pb-14 pt-6 md:px-10 md:pb-24 md:pt-7">
+      <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col px-6 pb-14 pt-6 md:px-10 md:pb-24 md:pt-7">
         {/* Top bar */}
         <div className="flex items-center justify-between gap-6 border-b border-dz-espinafre/15 pb-5">
           <Logo variant="terracota" className="h-7 md:h-9" />
@@ -165,7 +167,7 @@ function Hero() {
           </a>
         </div>
 
-        <div className="flex items-center py-8 md:min-h-[620px] md:py-12">
+        <div className="flex flex-1 items-center py-8 md:min-h-[620px] md:py-12">
           <Reveal immediate className="w-full max-w-xl">
             <p className="label-caps text-dz-terracota">Dossenza · Cuidado digestivo</p>
             <h1 className="mt-6 text-5xl font-medium leading-[1.02] text-dz-espinafre md:text-7xl lg:text-[5.2rem]">

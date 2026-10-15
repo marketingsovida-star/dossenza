@@ -51,7 +51,7 @@ export function ProdutoPage({ produto }: { produto: Produto }) {
               <p className="label-caps mt-4 text-dz-tinta/55">
                 {produto.apresentacao} ·{" "}
                 {produto.composicao
-                  .filter((c) => !/cápsulas/i.test(c.nome))
+                  .filter((c) => !/cápsulas|excipiente/i.test(c.nome))
                   .map((c) => c.nome)
                   .join(" · ")}
               </p>

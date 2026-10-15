@@ -73,7 +73,7 @@ export const PRODUTOS: Record<ProdutoId, Produto> = {
     apresentacao: "60 cápsulas vegetais",
     capsula: "Cápsulas vegetais",
     modoUso:
-      "Ingerir 2x ao dia: 1 cápsula junto com o almoço e 1 cápsula junto com o jantar, ou conforme orientação do profissional de saúde.",
+      "Ingerir 1 cápsula junto com o almoço e 1 cápsula junto com o jantar, ou conforme orientação profissional.",
     beneficios: ["Apoio à digestão no estômago", "Enzimas em dose declarada", "Cápsulas vegetais"],
     ativosDestaque: [
       { nome: "Pepsina", beneficio: "Enzima que atua na quebra das proteínas no estômago." },
@@ -84,7 +84,7 @@ export const PRODUTOS: Record<ProdutoId, Produto> = {
       { nome: "Olea europaea", qtd: "100 mg" },
       { nome: "Protease ácida", qtd: "50 mg" },
       { nome: "Pepsina", qtd: "30 mg" },
-      { nome: "Cápsulas vegetais", qtd: "60 unid." },
+      { nome: "Excipiente q.s.p.", qtd: "1 dose" },
     ],
     precos: [
       { qtd: "1", label: "1 frasco", total: "139,90", unidade: "R$ 139,90 por frasco" },
@@ -117,29 +117,29 @@ export const PRODUTOS: Record<ProdutoId, Produto> = {
     foco: "intestino",
     tagline: "Enzimas digestivas para o intestino.",
     descricao:
-      "Seis ativos em cápsulas gastrorresistentes, que atravessam o estômago para liberar as enzimas no intestino: actinidina, Cynara cardunculus, lipase, alfa-amilase, protease alcalina e alfa-galactosidase.",
+      "Seis ativos em cápsulas gastrorresistentes, que atravessam o estômago para liberar as enzimas no intestino: actinidina, Cynara cardunculus, lipase, alfa amilase, protease alcalina e alfa galactosidase.",
     origem: "Entero- vem do grego énteron: intestino.",
     apresentacao: "60 cápsulas gastrorresistentes",
     capsula: "Cápsulas gastrorresistentes",
     modoUso:
-      "Ingerir 2x ao dia: 1 cápsula junto com o almoço e 1 cápsula no jantar, ou conforme orientação do profissional de saúde. Não abrir nem mastigar a cápsula: o revestimento gastrorresistente leva a fórmula até o intestino.",
+      "Ingerir 1 cápsula junto com o almoço e 1 cápsula junto com o jantar, ou conforme orientação profissional.",
     beneficios: ["Apoio à digestão no intestino", "Seis enzimas e ativos", "Cápsulas gastrorresistentes"],
     ativosDestaque: [
       { nome: "Actinidina", beneficio: "Enzima do kiwi que atua sobre proteínas." },
-      { nome: "Alfa-galactosidase", beneficio: "Enzima ligada à digestão de carboidratos de leguminosas." },
+      { nome: "Alfa galactosidase", beneficio: "Enzima ligada à digestão de carboidratos de leguminosas." },
       { nome: "Cynara cardunculus", beneficio: "Extrato botânico da família da alcachofra." },
       { nome: "Lipase", beneficio: "Enzima que atua sobre as gorduras." },
-      { nome: "Alfa-amilase", beneficio: "Enzima que atua sobre os amidos." },
+      { nome: "Alfa amilase", beneficio: "Enzima que atua sobre os amidos." },
       { nome: "Protease alcalina", beneficio: "Protease ativa no pH do intestino." },
     ],
     composicao: [
       { nome: "Actinidina", qtd: "100 mg" },
       { nome: "Cynara cardunculus", qtd: "100 mg" },
       { nome: "Lipase", qtd: "80 mg" },
-      { nome: "Alfa-amilase", qtd: "70 mg" },
+      { nome: "Alfa amilase", qtd: "70 mg" },
       { nome: "Protease alcalina", qtd: "50 mg" },
-      { nome: "Alfa-galactosidase", qtd: "50 mg" },
-      { nome: "Cápsulas gastrorresistentes", qtd: "60 unid." },
+      { nome: "Alfa galactosidase", qtd: "50 mg" },
+      { nome: "Excipiente q.s.p.", qtd: "1 dose" },
     ],
     precos: [
       { qtd: "1", label: "1 frasco", total: "184,90", unidade: "R$ 184,90 por frasco" },

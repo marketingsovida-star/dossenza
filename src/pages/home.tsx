@@ -22,7 +22,7 @@ import { useHead } from "@/lib/head";
 const FAQS = [
   {
     q: "Qual a diferença entre o Gastro e o Entero?",
-    a: "Cada um tem um foco. O Gastro reúne enzimas que atuam no estômago (pepsina e protease ácida) com Olea europaea, em cápsulas vegetais. O Entero reúne seis ativos (actinidina, Cynara cardunculus, lipase, alfa-amilase, protease alcalina e alfa-galactosidase) em cápsulas gastrorresistentes, que liberam a fórmula no intestino.",
+    a: "Cada um tem um foco. O Gastro reúne enzimas que atuam no estômago (pepsina e protease ácida) com Olea europaea, em cápsulas vegetais. O Entero reúne seis ativos (actinidina, Cynara cardunculus, lipase, alfa amilase, protease alcalina e alfa galactosidase) em cápsulas gastrorresistentes, que liberam a fórmula no intestino.",
   },
   {
     q: "Posso usar os dois juntos?",
@@ -30,7 +30,7 @@ const FAQS = [
   },
   {
     q: "Como devo usar?",
-    a: "Gastro e Entero: ingerir 2x ao dia, 1 cápsula junto com o almoço e 1 cápsula junto com o jantar, ou conforme orientação do profissional de saúde. No Entero, não abra nem mastigue a cápsula: o revestimento gastrorresistente leva a fórmula até o intestino.",
+    a: "Gastro e Entero: ingerir 1 cápsula junto com o almoço e 1 cápsula junto com o jantar, ou conforme orientação profissional.",
   },
   {
     q: "O que são cápsulas gastrorresistentes?",

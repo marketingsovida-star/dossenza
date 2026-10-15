@@ -3,8 +3,12 @@
 // TODO: trocar pelo domínio final quando a hospedagem estiver definida.
 export const BASE_URL = "https://dossenza.com.br";
 
+/** Versão dos arquivos de /public — subir quando trocar imagens para furar o cache do navegador. */
+const ASSET_VERSION = "4";
+
 /** Caminho de arquivo de /public respeitando a base do Vite ("/dossenza/" no GitHub Pages, "/" em domínio próprio). */
-export const asset = (p: string) => `${import.meta.env.BASE_URL.replace(/\/$/, "")}${p}`;
+export const asset = (p: string) =>
+  `${import.meta.env.BASE_URL.replace(/\/$/, "")}${p}${p.includes("?") ? "&" : "?"}v=${ASSET_VERSION}`;
 
 // TODO: número do WhatsApp da Dossenza (DDI + DDD + número, só dígitos).
 export const WHATSAPP_NUMBER = "5500000000000";

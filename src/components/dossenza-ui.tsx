@@ -119,7 +119,7 @@ export function PriceCards({
             )}
             <div className="mb-5 flex h-40 items-end justify-center">
               <img
-                src={asset(`/products/${imagePrefix}-${p.qtd}.webp?v=3`)}
+                src={asset(`/products/${imagePrefix}-${p.qtd}.webp`)}
                 alt={`${produtoNome} — ${p.label}`}
                 loading="lazy"
                 className="max-h-40 w-auto max-w-full object-contain"

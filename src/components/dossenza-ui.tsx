@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, ShieldCheck, Truck, MessageCircle, Lock } from "lucide-react";
+import { ArrowRight, ShieldCheck, Truck, MessageCircle, Lock, ShoppingBag } from "lucide-react";
 import { Reveal } from "@/components/reveal";
 import { type Preco, type ProdutoId, asset, whatsappUrl } from "@/data/produtos";
 
@@ -70,19 +70,60 @@ export const BTN = {
   lightOutline: `${BTN_BASE} border border-dz-creme/60 text-dz-creme hover:bg-dz-creme/10 focus-visible:ring-dz-creme`,
 };
 
-/* ---------- Top bar persistente (páginas de produto) ---------- */
-export function ProductTopBar() {
+/* ---------- Cabeçalho do site (home, loja e páginas de produto) ----------
+   overlay = dentro do banner (sem fundo, logo maior); dark = sobre fundo espinafre.
+   O botão da sacola ainda não tem função (como na Galli). */
+export function SiteHeader({ overlay = false, dark = false }: { overlay?: boolean; dark?: boolean }) {
+  const navText = dark ? "text-dz-creme/85 hover:text-dz-trigo" : "text-dz-espinafre/80 hover:text-dz-terracota";
   return (
-    <header className="sticky top-0 z-40 border-b border-dz-linha bg-dz-creme/90 backdrop-blur">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3 md:px-10">
-        <Link to="/" aria-label="Dossenza — início">
-          <Logo variant="terracota" className="h-6 md:h-7" />
+    <div className={overlay ? "" : "border-b border-dz-linha bg-dz-creme/92 backdrop-blur"}>
+      <div
+        className={`mx-auto flex max-w-7xl items-center justify-between gap-6 ${
+          overlay ? `border-b pb-5 ${dark ? "border-dz-creme/25" : "border-dz-espinafre/15"}` : "px-6 py-3 md:px-10"
+        }`}
+      >
+        <Link to="/" aria-label="Dossenza — página inicial" className="shrink-0">
+          <Logo variant={dark ? "creme" : "terracota"} className={overlay ? "h-7 md:h-9" : "h-6"} />
         </Link>
-        <Link to="/#produtos" className="text-sm text-dz-tinta/75 transition-colors hover:text-dz-espinafre">
-          ← Voltar aos produtos
-        </Link>
+        <nav className="hidden items-center gap-8 md:flex">
+          {NAV.map((n) => (
+            <Link key={n.href} to={n.href} className={`text-sm transition-colors ${navText}`}>
+              {n.label}
+            </Link>
+          ))}
+        </nav>
+        <div className="flex items-center gap-2 sm:gap-3">
+          <Link to="/loja" className={`${dark ? BTN.light : BTN.primary} min-h-10 px-5`}>
+            Loja
+          </Link>
+          <button
+            type="button"
+            aria-label="Sacola"
+            className={`inline-flex h-10 w-10 items-center justify-center rounded-full border transition-colors ${
+              dark
+                ? "border-dz-creme/60 text-dz-creme hover:bg-dz-creme/10"
+                : "border-dz-espinafre text-dz-espinafre hover:bg-dz-areia"
+            }`}
+          >
+            <ShoppingBag className="h-4 w-4" aria-hidden="true" />
+          </button>
+        </div>
       </div>
-    </header>
+    </div>
+  );
+}
+
+/* ---------- Cabeçalho fixo que aparece ao rolar (home e loja) ---------- */
+export function StickyHeader({ visible }: { visible: boolean }) {
+  return (
+    <div
+      className={`fixed inset-x-0 top-0 z-40 transition-all duration-300 ${
+        visible ? "translate-y-0 opacity-100" : "pointer-events-none -translate-y-full opacity-0"
+      }`}
+      aria-hidden={!visible}
+    >
+      <SiteHeader />
+    </div>
   );
 }
 
@@ -219,6 +260,11 @@ export function Footer() {
               <li>
                 <Link to="/entero" className="transition-colors hover:text-dz-trigo">
                   Dossenza Entero
+                </Link>
+              </li>
+              <li>
+                <Link to="/loja" className="transition-colors hover:text-dz-trigo">
+                  Loja
                 </Link>
               </li>
               <li>

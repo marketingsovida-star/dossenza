@@ -1,6 +1,6 @@
 import { Check, Droplets, Waves } from "lucide-react";
 import { Reveal } from "@/components/reveal";
-import { ProductTopBar, PriceCards, TrustStrip, Footer, THEME } from "@/components/dossenza-ui";
+import { SiteHeader, PriceCards, TrustStrip, Footer, THEME } from "@/components/dossenza-ui";
 import { type Produto, BASE_URL } from "@/data/produtos";
 import { useHead } from "@/lib/head";
 
@@ -35,7 +35,9 @@ export function ProdutoPage({ produto }: { produto: Produto }) {
 
   return (
     <div className="min-h-screen bg-dz-creme text-dz-tinta">
-      <ProductTopBar />
+      <header className="sticky top-0 z-40">
+        <SiteHeader />
+      </header>
       <main>
         {/* VENDA — título/descritivo centralizado (padrão das páginas da Galli) */}
         <section id="precos" className="px-6 py-14 md:px-10 md:py-20">

@@ -15,40 +15,10 @@ import {
   Waves,
 } from "lucide-react";
 import { Reveal, RevealImage } from "@/components/reveal";
-import { BTN, Footer, Logo, NAV, PriceCards, THEME } from "@/components/dossenza-ui";
+import { BTN, Footer, PriceCards, SiteHeader, StickyHeader, THEME } from "@/components/dossenza-ui";
 import { PRODUTOS, KIT_PRECOS, asset, type Produto } from "@/data/produtos";
+import { DIFERENCIAIS, FAQS } from "@/data/conteudo";
 import { useHead } from "@/lib/head";
-
-const FAQS = [
-  {
-    q: "Qual a diferença entre o Gastro e o Entero?",
-    a: "Cada um tem um foco. O Gastro reúne enzimas que atuam no estômago (pepsina e protease ácida) com Olea europaea, em cápsulas vegetais. O Entero reúne seis ativos (actinidina, Cynara cardunculus, lipase, alfa amilase, protease alcalina e alfa galactosidase) em cápsulas gastrorresistentes, que liberam a fórmula no intestino.",
-  },
-  {
-    q: "Posso usar os dois juntos?",
-    a: "Sim. Eles foram pensados como um sistema: o Gastro acompanha a digestão no estômago e o Entero, no intestino. Em caso de dúvida, converse com o seu profissional de saúde.",
-  },
-  {
-    q: "Como devo usar?",
-    a: "Gastro e Entero: ingerir 1 cápsula junto com o almoço e 1 cápsula junto com o jantar, ou conforme orientação profissional.",
-  },
-  {
-    q: "O que são cápsulas gastrorresistentes?",
-    a: "São cápsulas com revestimento que resiste à acidez do estômago e se dissolve no intestino. É o que permite ao Entero liberar as enzimas onde elas atuam.",
-  },
-  {
-    q: "Como funciona a garantia?",
-    a: "Você tem 7 dias para testar. Se não ficar satisfeito, abra um chamado no nosso SAC e orientamos a devolução.",
-  },
-  {
-    q: "Como funciona a compra?",
-    a: "Por enquanto, a compra é feita diretamente com a nossa equipe pelo WhatsApp. É só escolher a opção desejada e clicar em Adquirir.",
-  },
-  {
-    q: "Os produtos substituem acompanhamento médico?",
-    a: "Não. Gastro e Entero são suplementos alimentares, não medicamentos. Eles não substituem uma alimentação equilibrada nem o acompanhamento de um profissional de saúde.",
-  },
-];
 
 const DESCRIPTION =
   "Dossenza Gastro e Entero: enzimas digestivas para o estômago e para o intestino, com cada ativo apresentado pelo que é. O cuidado começa por dentro.";
@@ -105,34 +75,6 @@ export function HomePage() {
   );
 }
 
-/* ---------- STICKY HEADER ---------- */
-function StickyHeader({ visible }: { visible: boolean }) {
-  return (
-    <div
-      className={`fixed inset-x-0 top-0 z-40 border-b border-dz-linha bg-dz-creme/92 backdrop-blur transition-all duration-300 ${
-        visible ? "translate-y-0 opacity-100" : "pointer-events-none -translate-y-full opacity-0"
-      }`}
-      aria-hidden={!visible}
-    >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3 md:px-10">
-        <a href="#inicio" aria-label="Voltar ao início">
-          <Logo variant="terracota" className="h-6" />
-        </a>
-        <nav className="hidden items-center gap-8 md:flex">
-          {NAV.map((n) => (
-            <a key={n.href} href={n.href.replace("/", "")} className="text-sm text-dz-tinta/75 transition-colors hover:text-dz-espinafre">
-              {n.label}
-            </a>
-          ))}
-        </nav>
-        <a href="#produtos" className={`${BTN.primary} min-h-10 px-5`}>
-          Ver produtos
-        </a>
-      </div>
-    </div>
-  );
-}
-
 /* ---------- HERO ---------- */
 function Hero() {
   return (
@@ -153,20 +95,8 @@ function Hero() {
       />
 
       <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col px-6 pb-14 pt-6 md:px-10 md:pb-24 md:pt-7">
-        {/* Top bar */}
-        <div className="flex items-center justify-between gap-6 border-b border-dz-espinafre/15 pb-5">
-          <Logo variant="terracota" className="h-7 md:h-9" />
-          <nav className="hidden items-center gap-8 md:flex">
-            {NAV.map((n) => (
-              <a key={n.href} href={n.href.replace("/", "")} className="text-sm text-dz-espinafre/80 transition-colors hover:text-dz-terracota">
-                {n.label}
-              </a>
-            ))}
-          </nav>
-          <a href="#produtos" className={`${BTN.primary} hidden min-h-10 px-5 md:inline-flex`}>
-            Ver produtos
-          </a>
-        </div>
+        {/* Cabeçalho dentro do banner (mesmo cabeçalho das outras páginas) */}
+        <SiteHeader overlay />
 
         <div className="flex flex-1 items-center py-8 md:py-10">
           <Reveal immediate className="w-full max-w-xl">
@@ -467,12 +397,7 @@ function Fluxo() {
 
 /* ---------- DIFERENCIAIS ---------- */
 function Diferenciais() {
-  const itens = [
-    { n: "01", t: "Você sabe o que escolhe", d: "Ativos e quantidades apresentados de forma clara, no rótulo e no site, para uma escolha consciente." },
-    { n: "02", t: "Um foco por fórmula", d: "Gastro para o estômago, Entero para o intestino. Cada produto é apresentado pelo que é, sem promessas genéricas." },
-    { n: "03", t: "Essência é clareza", d: "Dossenza une Dosso, sobrenome da Dra. Lidiana, a essenza, essência em italiano. Aqui, essência é clareza, não simplificação." },
-    { n: "04", t: "Origem médica", d: "A marca nasce da especialidade da Dra. Lidiana Dosso, a médica do intestino, e amplia esse ponto de partida para uma linha digestiva." },
-  ];
+  const itens = DIFERENCIAIS;
   return (
     <section id="diferenciais" className="scroll-mt-20 px-6 py-20 md:px-10 md:py-28">
       <div className="mx-auto max-w-7xl">

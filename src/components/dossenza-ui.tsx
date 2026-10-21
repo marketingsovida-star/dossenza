@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, ShieldCheck, Truck, MessageCircle, Lock, ShoppingBag } from "lucide-react";
+import { ArrowRight, BadgeCheck, ChevronRight, ShieldCheck, Truck, MessageCircle, Lock, ShoppingBag } from "lucide-react";
 import { Reveal } from "@/components/reveal";
-import { type Preco, type ProdutoId, asset, whatsappUrl } from "@/data/produtos";
+import { PHARMA_OPCOES, type Preco, type ProdutoId, asset, whatsappUrl } from "@/data/produtos";
 
 export const NAV = [
   { href: "/#produtos", label: "Produtos" },
@@ -191,6 +191,43 @@ export function PriceCards({
   );
 }
 
+/* ---------- Seção Pharma (home e loja, logo abaixo do kit) — layout da seção Pharma da Bersch ---------- */
+export function PharmaSection() {
+  return (
+    <section aria-label="Dossenza Pharma" className="bg-dz-creme px-5 pb-16 pt-2 md:px-6">
+      <div className="mx-auto max-w-[1160px]">
+        <div className="overflow-hidden rounded-[10px] border-[1.5px] border-dz-terracota bg-white shadow-[0_8px_30px_rgba(197,106,75,0.18)]">
+          <div className="label-caps bg-dz-terracota py-1.5 text-center text-[0.74rem] text-dz-creme">Dossenza Pharma</div>
+          <div className="px-5 py-8 text-center md:px-10 md:py-10">
+            <h2 className="text-[1.9rem] font-medium leading-tight text-dz-espinafre md:text-[2.5rem]">Fórmulas personalizadas</h2>
+            <p className="mt-2 text-[0.98rem] text-dz-tinta/65 md:text-[1.05rem]">Na Dossenza Pharma você pode solicitar:</p>
+            <ul className="mx-auto mt-6 grid max-w-[860px] gap-3 sm:grid-cols-3">
+              {PHARMA_OPCOES.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-center justify-center gap-3 rounded-[8px] border border-dz-linha bg-dz-areia px-4 py-4 sm:flex-col sm:gap-2.5"
+                >
+                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-dz-terracota">
+                    <BadgeCheck className="h-5 w-5 text-dz-creme" strokeWidth={1.5} aria-hidden="true" />
+                  </span>
+                  <span className="text-[0.92rem] font-medium leading-snug text-dz-tinta md:text-[0.98rem]">{item}</span>
+                </li>
+              ))}
+            </ul>
+            <Link
+              to="/pharma"
+              className="label-caps mt-7 inline-flex min-h-[50px] w-full items-center justify-center rounded-[6px] bg-dz-terracota px-10 text-[0.86rem] text-dz-creme transition hover:bg-[#b25f42] sm:w-auto"
+            >
+              Solicitar no Pharma
+              <ChevronRight className="ml-2 h-4 w-4" aria-hidden="true" />
+            </Link>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ---------- Selos de confiança ---------- */
 export function TrustStrip({ dark = false }: { dark?: boolean }) {
   const itens = [
@@ -265,6 +302,11 @@ export function Footer() {
               <li>
                 <Link to="/loja" className="transition-colors hover:text-dz-trigo">
                   Loja
+                </Link>
+              </li>
+              <li>
+                <Link to="/pharma" className="transition-colors hover:text-dz-trigo">
+                  Dossenza Pharma
                 </Link>
               </li>
               <li>

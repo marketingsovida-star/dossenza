@@ -24,6 +24,22 @@ export const SAC_EMAIL = "sac@dossenza.com.br";
 // Vazio = sem backend: o formulário abre o e-mail do cliente já preenchido (sem anexos).
 export const SAC_FORM_ENDPOINT = "";
 
+/* ---------- Pharma (página /pharma e seção Pharma) ---------- */
+// TODO: e-mail que recebe as solicitações de manipulação (fallback sem backend).
+export const PHARMA_EMAIL = "pharma@dossenza.com.br";
+// Endpoint de formulário (Formspree, Web3Forms ou similar — aceita POST multipart com a receita anexada).
+// Vazio = sem backend: o modal abre o e-mail do cliente já preenchido (a receita é anexada à mão).
+export const PHARMA_FORM_ENDPOINT = "";
+export const PHARMA_OPCOES = ["Sua fórmula prescrita", "Sua fórmula personalizada", "Orçamento de manipulação"];
+
+/* Backend central Pharma (Supabase compartilhado por todas as marcas — ver repo pharma-backend).
+   Com URL e chave preenchidas, o formulário grava pedidos/rascunhos no banco e o /admin funciona;
+   vazio = fallback por e-mail (PHARMA_FORM_ENDPOINT / mailto). */
+export const PHARMA_SUPABASE_URL = "";
+export const PHARMA_SUPABASE_ANON_KEY = "";
+/** Identificador desta marca no backend central (= marcas.slug). */
+export const PHARMA_MARCA = "dossenza";
+
 export type Preco = {
   qtd: "1" | "3" | "5";
   label: string;

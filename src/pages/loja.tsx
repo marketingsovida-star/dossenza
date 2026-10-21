@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type ComponentType } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Check, Droplets, Plus, ShieldCheck, Truck, Waves } from "lucide-react";
 import { Reveal } from "@/components/reveal";
-import { BTN, Footer, SiteHeader, StickyHeader } from "@/components/dossenza-ui";
+import { BTN, Footer, PharmaSection, SiteHeader, StickyHeader } from "@/components/dossenza-ui";
 import { PRODUTOS, KIT_PRECOS, asset, whatsappUrl, type Preco, type Produto } from "@/data/produtos";
 import { DIFERENCIAIS, FAQS } from "@/data/conteudo";
 import { useHead } from "@/lib/head";
@@ -119,6 +119,7 @@ export function LojaPage() {
         <Marquee />
         <Vitrine />
         <Comprar />
+        <PharmaSection />
         <Diferenciais />
         <FAQ />
         <CtaFinal />

@@ -15,7 +15,7 @@ import {
   Waves,
 } from "lucide-react";
 import { Reveal, RevealImage } from "@/components/reveal";
-import { BTN, Footer, PriceCards, SiteHeader, StickyHeader, THEME } from "@/components/dossenza-ui";
+import { BTN, Footer, PharmaSection, PriceCards, SiteHeader, StickyHeader, THEME } from "@/components/dossenza-ui";
 import { PRODUTOS, KIT_PRECOS, asset, type Produto } from "@/data/produtos";
 import { DIFERENCIAIS, FAQS } from "@/data/conteudo";
 import { useHead } from "@/lib/head";
@@ -64,6 +64,7 @@ export function HomePage() {
         <Produtos />
         <ProdutoEntero />
         <Sistema />
+        <PharmaSection />
         <Fluxo />
         <Diferenciais />
         <Manifesto />

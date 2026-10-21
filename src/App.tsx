@@ -5,6 +5,10 @@ import { GastroPage } from "@/pages/gastro";
 import { EnteroPage } from "@/pages/entero";
 import { SacPage } from "@/pages/sac";
 import { LojaPage } from "@/pages/loja";
+import { PharmaPage } from "@/pages/pharma";
+import { AdminLoginPage } from "@/pages/admin/login";
+import { AdminQuizPage } from "@/pages/admin/quiz";
+import { AdminPedidosPage } from "@/pages/admin/pedidos";
 
 /* Rola para o topo ao trocar de rota; respeita âncoras (#produtos, #faq...). */
 function ScrollManager() {
@@ -32,6 +36,11 @@ export function App() {
         <Route path="/entero" element={<EnteroPage />} />
         <Route path="/sac" element={<SacPage />} />
         <Route path="/loja" element={<LojaPage />} />
+        <Route path="/pharma" element={<PharmaPage />} />
+        <Route path="/admin" element={<Navigate to="/admin/quiz" replace />} />
+        <Route path="/admin/login" element={<AdminLoginPage />} />
+        <Route path="/admin/quiz" element={<AdminQuizPage />} />
+        <Route path="/admin/pharma-pedidos" element={<AdminPedidosPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

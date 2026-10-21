@@ -89,7 +89,7 @@ export function PharmaPage() {
               alt="Frasco personalizado Dossenza Pharma"
               width={583}
               height={1000}
-              className="h-auto w-full max-w-[280px] object-contain drop-shadow-2xl md:max-w-[400px]"
+              className="h-auto max-h-[300px] w-auto object-contain drop-shadow-2xl md:max-h-[400px]"
             />
           </div>
         </section>

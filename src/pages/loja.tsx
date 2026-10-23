@@ -8,7 +8,7 @@ import { DIFERENCIAIS, FAQS } from "@/data/conteudo";
 import { useHead } from "@/lib/head";
 
 const DESC =
-  "A loja oficial Dossenza: Gastro para o estômago, Entero para o intestino e o sistema completo com os dois juntos.";
+  "A loja oficial Dossenza: Gastro para o estômago, Entero para o intestino, Digest para as refeições e os sistemas Essencial e Completo.";
 
 const MARQUEE = [
   "Enzimas digestivas",
@@ -74,7 +74,7 @@ const SLIDES: Slide[] = [
     imgPos: "right 80%",
     imgMobile: "/waves/hero-banner.webp",
     veil: VEIL_LIGHT,
-    tag: "Sistema completo",
+    tag: "Sistema essencial",
     titulo: "Um sistema. Dois nomes.",
     sub: "Gastro e Entero juntos, do estômago ao intestino, com preço especial nos combos de 3 e 5.",
     cta: "Montar meu sistema",
@@ -92,7 +92,7 @@ const fmtBRL = (n: number) => n.toLocaleString("pt-BR", { minimumFractionDigits:
 
 export function LojaPage() {
   useHead({
-    title: "Loja Dossenza — Gastro, Entero e sistema completo",
+    title: "Loja Dossenza — Gastro, Entero, Digest e sistemas",
     description: DESC,
     path: "/loja",
     ogImage: "/og-image.jpg",
@@ -340,9 +340,9 @@ function Comprar() {
         {/* Kits em cima (mesma largura dos cards de baixo), produtos individuais embaixo */}
         <div className="mx-auto mt-12 grid max-w-[846px] items-start gap-6 lg:grid-cols-2">
           <LojaCard
-            tag="Sistema completo"
+            tag="Sistema essencial"
             accent="text-dz-espinafre"
-            nome="Sistema"
+            nome="Sistema Essencial"
             sub="Gastro + Entero"
             imagePrefix="kit"
             meta="1 Gastro + 1 Entero por sistema"
@@ -353,15 +353,15 @@ function Comprar() {
             alto
           />
           <LojaCard
-            tag="Kit cuidado completo"
+            tag="Sistema completo"
             accent="text-dz-terracota"
-            nome="Cuidado completo"
+            nome="Sistema Completo"
             sub="Gastro + Entero + Digest"
             imagePrefix="kit3p"
-            meta="1 Gastro + 1 Entero + 1 Digest por kit"
+            meta="1 Gastro + 1 Entero + 1 Digest por sistema"
             metaPorQtd={(q) => `${q} Gastro + ${q} Entero + ${q} Digest`}
             precos={KIT_PRECOS}
-            unidade={["kit", "kits"]}
+            unidade={["sistema", "sistemas"]}
             badge="Cuidado completo"
             emBreve
             alto

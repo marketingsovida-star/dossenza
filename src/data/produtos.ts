@@ -254,7 +254,7 @@ export const PRODUTOS: Record<ProdutoId, Produto> = {
   },
 };
 
-// Sistema completo = Gastro + Entero (preço = soma das faixas individuais)
+// Sistema Essencial = Gastro + Entero (preço = soma das faixas individuais)
 export const KIT_PRECOS: Preco[] = [
   { qtd: "1", label: "1 sistema", total: "324,80", unidade: "1 Gastro + 1 Entero" },
   {

@@ -115,7 +115,7 @@ function Hero() {
                 <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
               </a>
               <a href="#sistema" className={`w-full sm:w-auto ${BTN.outline}`}>
-                Ver o sistema completo
+                Ver o sistema essencial
               </a>
             </div>
             <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-dz-espinafre/70">
@@ -313,7 +313,7 @@ function Sistema() {
             </div>
           </Reveal>
           <Reveal delay={2}>
-            <p className="label-caps text-dz-terracota">Sistema completo · Gastro + Entero</p>
+            <p className="label-caps text-dz-terracota">Sistema essencial · Gastro + Entero</p>
             <h2 className="mt-3 text-4xl font-medium text-dz-espinafre md:text-5xl">
               Um sistema. <span className="italic text-dz-terracota">Dois nomes.</span>
             </h2>
@@ -335,7 +335,7 @@ function Sistema() {
         </div>
 
         <div className="mt-14">
-          <PriceCards precos={KIT_PRECOS} produtoNome="Sistema Dossenza (Gastro + Entero)" imagePrefix="kit" />
+          <PriceCards precos={KIT_PRECOS} produtoNome="Sistema Essencial Dossenza (Gastro + Entero)" imagePrefix="kit" />
           <p className="mx-auto mt-6 max-w-2xl text-center text-xs text-dz-tinta/55">
             Valores de referência. A compra é finalizada com nossa equipe pelo WhatsApp.
           </p>

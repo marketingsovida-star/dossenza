@@ -350,6 +350,7 @@ function Comprar() {
             precos={KIT_PRECOS}
             unidade={["sistema", "sistemas"]}
             featured
+            alto
           />
           <LojaCard
             tag="Kit cuidado completo"
@@ -363,6 +364,7 @@ function Comprar() {
             unidade={["kit", "kits"]}
             badge="Cuidado completo"
             emBreve
+            alto
           />
         </div>
         <div className="mt-6 grid items-start gap-6 lg:grid-cols-3">
@@ -430,6 +432,7 @@ function LojaCard({
   metaPorQtd,
   badge,
   emBreve = false,
+  alto = false,
 }: {
   tag: string;
   icon?: ComponentType<{ className?: string; "aria-hidden"?: boolean }>;
@@ -449,6 +452,8 @@ function LojaCard({
   badge?: string;
   /** Sem preço: botão desativado "Compra disponível em breve". */
   emBreve?: boolean;
+  /** Área de imagem mais alta (cards de kit, com vários produtos). */
+  alto?: boolean;
 }) {
   const [i, setI] = useState(precos.length > 1 ? 1 : 0);
   const p = precos[i];
@@ -479,8 +484,8 @@ function LojaCard({
         {Icon && <Icon className="h-4 w-4" aria-hidden={true} />} {tag}
       </div>
 
-      <div className="mt-4 flex h-40 items-center justify-center">
-        <img src={asset(`/products/${imagePrefix}-${p.qtd}.webp`)} alt={`Dossenza ${nome} — ${label}`} className="max-h-40 w-auto max-w-full object-contain" />
+      <div className={`mt-4 flex items-center justify-center ${alto ? "h-52" : "h-40"}`}>
+        <img src={asset(`/products/${imagePrefix}-${p.qtd}.webp`)} alt={`Dossenza ${nome} — ${label}`} className={`w-auto max-w-full object-contain ${alto ? "max-h-52" : "max-h-40"}`} />
       </div>
 
       <h3 className="mt-4 text-2xl font-medium text-dz-espinafre">

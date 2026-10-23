@@ -149,6 +149,26 @@
   animation: image-zoom-in 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+/* Selo de quantidade nos kits da loja: centralizado no ponto e "salta" ao aparecer */
+@keyframes qty-pop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -30%) scale(0.6);
+  }
+  70% {
+    opacity: 1;
+    transform: translate(-50%, -110%) scale(1.06);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -100%) scale(1);
+  }
+}
+.qty-pop {
+  transform: translate(-50%, -100%);
+  animation: qty-pop 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 /* Faixa marquee da loja */
 @keyframes marquee {
   from {
@@ -185,7 +205,8 @@
   .reveal.reveal-in,
   .reveal-image.reveal-in,
   .wave-float,
-  .animate-marquee {
+  .animate-marquee,
+  .qty-pop {
     animation: none !important;
   }
 }

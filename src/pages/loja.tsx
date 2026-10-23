@@ -351,6 +351,10 @@ function Comprar() {
             unidade={["sistema", "sistemas"]}
             featured
             alto
+            marcadores={[
+              { left: 25.6, top: 0 },
+              { left: 74.5, top: 0 },
+            ]}
           />
           <LojaCard
             tag="Sistema completo"
@@ -365,6 +369,11 @@ function Comprar() {
             badge="Cuidado completo"
             emBreve
             alto
+            marcadores={[
+              { left: 25.6, top: 0 },
+              { left: 74.5, top: 0 },
+              { left: 50, top: 58 },
+            ]}
           />
         </div>
         <div className="mt-6 grid items-start gap-6 lg:grid-cols-3">
@@ -433,6 +442,7 @@ function LojaCard({
   badge,
   emBreve = false,
   alto = false,
+  marcadores,
 }: {
   tag: string;
   icon?: ComponentType<{ className?: string; "aria-hidden"?: boolean }>;
@@ -454,6 +464,8 @@ function LojaCard({
   emBreve?: boolean;
   /** Área de imagem mais alta (cards de kit, com vários produtos). */
   alto?: boolean;
+  /** Kits: imagem fixa de 1 kit + selo de quantidade acima de cada produto (posição em % da imagem). */
+  marcadores?: { left: number; top: number }[];
 }) {
   const [i, setI] = useState(precos.length > 1 ? 1 : 0);
   const p = precos[i];
@@ -485,7 +497,27 @@ function LojaCard({
       </div>
 
       <div className={`mt-4 flex items-center justify-center ${alto ? "h-52" : "h-40"}`}>
-        <img src={asset(`/products/${imagePrefix}-${p.qtd}.webp`)} alt={`Dossenza ${nome} — ${label}`} className={`w-auto max-w-full object-contain ${alto ? "max-h-52" : "max-h-40"}`} />
+        {marcadores ? (
+          <div className="relative inline-block">
+            <img
+              src={asset(`/products/${imagePrefix}-1.webp`)}
+              alt={`Dossenza ${nome} — ${label}`}
+              className={`block w-auto max-w-full object-contain ${alto ? "max-h-48" : "max-h-36"}`}
+            />
+            {qty > 1 &&
+              marcadores.map((m, idx) => (
+                <span
+                  key={`${p.qtd}-${idx}`}
+                  className="qty-pop label-caps pointer-events-none absolute whitespace-nowrap rounded-full bg-dz-espinafre px-2.5 py-1 text-[10px] text-dz-creme shadow-[var(--shadow-card)]"
+                  style={{ left: `${m.left}%`, top: `${m.top}%` }}
+                >
+                  {p.qtd} unidades
+                </span>
+              ))}
+          </div>
+        ) : (
+          <img src={asset(`/products/${imagePrefix}-${p.qtd}.webp`)} alt={`Dossenza ${nome} — ${label}`} className={`w-auto max-w-full object-contain ${alto ? "max-h-52" : "max-h-40"}`} />
+        )}
       </div>
 
       <h3 className="mt-4 text-2xl font-medium text-dz-espinafre">

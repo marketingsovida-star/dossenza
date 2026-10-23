@@ -337,7 +337,7 @@ function Comprar() {
             Mais unidades, <span className="italic text-dz-terracota">melhor preço.</span>
           </h2>
         </Reveal>
-        <div className="mt-12 grid items-start gap-6 md:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-12 grid items-start gap-6 lg:grid-cols-3">
           <LojaCard
             tag="Para o estômago"
             icon={Droplets}
@@ -369,6 +369,10 @@ function Comprar() {
             precos={PRODUTOS.entero.precos}
             unidade={["frasco", "frascos"]}
           />
+        </div>
+        {/* Digest numa linha própria, centralizado, na mesma largura dos cards de cima */}
+        <div className="mt-6 grid items-start gap-6 lg:grid-cols-3">
+          <div className="lg:col-start-2">
           <LojaCard
             tag="Para as refeições"
             icon={Utensils}
@@ -380,6 +384,7 @@ function Comprar() {
             unidade={["caixa", "caixas"]}
             detalhes="/digest"
           />
+          </div>
         </div>
 
         <div className="mx-auto mt-10 flex max-w-2xl flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs text-dz-tinta/65">

@@ -4,7 +4,7 @@
 export const BASE_URL = "https://dossenza.com.br";
 
 /** Versão dos arquivos de /public — subir quando trocar imagens para furar o cache do navegador. */
-const ASSET_VERSION = "6";
+const ASSET_VERSION = "7";
 
 /** Caminho de arquivo de /public respeitando a base do Vite ("/dossenza/" no GitHub Pages, "/" em domínio próprio). */
 export const asset = (p: string) =>

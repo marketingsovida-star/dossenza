@@ -338,7 +338,7 @@ function Comprar() {
           </h2>
         </Reveal>
         {/* Kits em cima (mesma largura dos cards de baixo), produtos individuais embaixo */}
-        <div className="mx-auto mt-12 grid max-w-[846px] items-start gap-6 lg:grid-cols-2">
+        <div className="mx-auto mt-12 grid max-w-[846px] items-stretch gap-6 lg:grid-cols-2">
           <LojaCard
             tag="Sistema essencial"
             accent="text-dz-espinafre"
@@ -369,14 +369,15 @@ function Comprar() {
             badge="Cuidado completo"
             emBreve
             alto
+            imagemKit="/products/kit3p-row.webp"
             marcadores={[
-              { left: 25.6, top: 0 },
-              { left: 74.5, top: 0 },
-              { left: 50, top: 58 },
+              { left: 13.2, top: 0 },
+              { left: 50, top: 48 },
+              { left: 86.8, top: 0 },
             ]}
           />
         </div>
-        <div className="mt-6 grid items-start gap-6 lg:grid-cols-3">
+        <div className="mt-6 grid items-stretch gap-6 lg:grid-cols-3">
           <LojaCard
             tag="Para o estômago"
             icon={Droplets}
@@ -406,7 +407,6 @@ function Comprar() {
             meta={PRODUTOS.digest.apresentacao}
             precos={PRODUTOS.digest.precos}
             unidade={["caixa", "caixas"]}
-            detalhes="/digest"
           />
         </div>
 
@@ -443,6 +443,7 @@ function LojaCard({
   emBreve = false,
   alto = false,
   marcadores,
+  imagemKit,
 }: {
   tag: string;
   icon?: ComponentType<{ className?: string; "aria-hidden"?: boolean }>;
@@ -466,6 +467,8 @@ function LojaCard({
   alto?: boolean;
   /** Kits: imagem fixa de 1 kit + selo de quantidade acima de cada produto (posição em % da imagem). */
   marcadores?: { left: number; top: number }[];
+  /** Imagem fixa do kit (padrão: {imagePrefix}-1). */
+  imagemKit?: string;
 }) {
   const [i, setI] = useState(precos.length > 1 ? 1 : 0);
   const p = precos[i];
@@ -479,7 +482,7 @@ function LojaCard({
 
   return (
     <div
-      className={`relative flex flex-col rounded-3xl border bg-white p-6 shadow-[var(--shadow-card)] md:p-7 ${
+      className={`relative flex h-full flex-col rounded-3xl border bg-white p-6 shadow-[var(--shadow-card)] md:p-7 ${
         featured ? "border-dz-espinafre ring-4 ring-dz-trigo/35" : badge ? "border-dz-terracota ring-4 ring-dz-terracota/20" : "border-dz-linha"
       }`}
     >
@@ -500,7 +503,7 @@ function LojaCard({
         {marcadores ? (
           <div className="relative inline-block">
             <img
-              src={asset(`/products/${imagePrefix}-1.webp`)}
+              src={asset(imagemKit ?? `/products/${imagePrefix}-1.webp`)}
               alt={`Dossenza ${nome} — ${label}`}
               className={`block w-auto max-w-full object-contain ${alto ? "max-h-48" : "max-h-36"}`}
             />
@@ -508,7 +511,7 @@ function LojaCard({
               marcadores.map((m, idx) => (
                 <span
                   key={`${p.qtd}-${idx}`}
-                  className="qty-pop label-caps pointer-events-none absolute whitespace-nowrap rounded-full bg-dz-espinafre px-2.5 py-1 text-[10px] text-dz-creme shadow-[var(--shadow-card)]"
+                  className="qty-pop label-caps pointer-events-none absolute whitespace-nowrap rounded-full bg-dz-espinafre px-2 py-0.5 text-[9px] tracking-[0.12em] text-dz-creme shadow-[var(--shadow-card)]"
                   style={{ left: `${m.left}%`, top: `${m.top}%` }}
                 >
                   {p.qtd} unidades

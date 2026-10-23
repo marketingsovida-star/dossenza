@@ -47,6 +47,17 @@ export const THEME: Record<
     chip: "border border-dz-azeitona/30 bg-dz-azeitona/8 text-dz-azeitona",
     check: "bg-dz-azeitona/12 text-dz-azeitona",
   },
+  digest: {
+    bg: "bg-dz-espinafre",
+    text: "text-dz-espinafre",
+    border: "border-dz-espinafre",
+    soft: "bg-dz-espinafre/10",
+    softText: "text-dz-espinafre",
+    btn: "bg-dz-espinafre text-dz-creme hover:bg-dz-musgo",
+    ring: "focus-visible:ring-dz-espinafre",
+    chip: "border border-dz-espinafre/30 bg-dz-espinafre/8 text-dz-espinafre",
+    check: "bg-dz-espinafre/12 text-dz-espinafre",
+  },
 };
 
 /* ---------- Logo ---------- */
@@ -174,6 +185,11 @@ export function PriceCards({
                 <span className="font-display text-5xl text-dz-espinafre">{p.total}</span>
               </div>
               {p.economia && <p className={`mt-2 text-xs font-semibold ${eyebrow}`}>{p.economia}</p>}
+              {p.frete && (
+                <p className="mt-1 inline-flex items-center gap-1.5 text-xs font-semibold text-dz-espinafre">
+                  <Truck className="h-3.5 w-3.5" aria-hidden="true" /> {p.frete}
+                </p>
+              )}
             </div>
             <a
               href={whatsappUrl(msg)}

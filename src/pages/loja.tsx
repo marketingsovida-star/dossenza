@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ComponentType } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Check, Droplets, Plus, ShieldCheck, Truck, Waves } from "lucide-react";
+import { ArrowRight, Check, Droplets, Plus, ShieldCheck, Truck, Utensils, Waves } from "lucide-react";
 import { Reveal } from "@/components/reveal";
 import { BTN, Footer, PharmaSection, SiteHeader, StickyHeader } from "@/components/dossenza-ui";
 import { PRODUTOS, KIT_PRECOS, asset, whatsappUrl, type Preco, type Produto } from "@/data/produtos";
@@ -272,17 +272,18 @@ function Vitrine() {
     <section className="px-6 py-18 md:px-10 md:py-24">
       <div className="mx-auto max-w-7xl">
         <Reveal className="mx-auto max-w-3xl text-center">
-          <p className="label-caps text-dz-terracota">Frascos avulsos</p>
+          <p className="label-caps text-dz-terracota">Unidades avulsas</p>
           <h2 className="mt-3 text-4xl font-medium text-dz-espinafre md:text-5xl">
-            Comece com <span className="italic text-dz-terracota">um frasco.</span>
+            Comece com <span className="italic text-dz-terracota">uma unidade.</span>
           </h2>
           <p className="mt-5 text-base leading-7 text-dz-tinta/75">
-            Prefere experimentar? Leve um frasco do produto que combina com o seu foco: estômago ou intestino.
+            Prefere experimentar? Leve uma unidade do produto que combina com o seu foco: estômago, intestino ou o conforto nas refeições.
           </p>
         </Reveal>
-        <div className="mt-12 grid gap-6 md:grid-cols-2">
+        <div className="mt-12 grid gap-6 lg:grid-cols-3">
           <VitrineCard produto={PRODUTOS.gastro} />
           <VitrineCard produto={PRODUTOS.entero} />
+          <VitrineCard produto={PRODUTOS.digest} />
         </div>
       </div>
     </section>
@@ -290,28 +291,31 @@ function Vitrine() {
 }
 
 function VitrineCard({ produto }: { produto: Produto }) {
-  const Icon = produto.id === "gastro" ? Droplets : Waves;
-  const accent = produto.id === "gastro" ? "text-dz-terracota" : "text-dz-azeitona";
-  const msg = `Oi Dossenza! Quero comprar 1 frasco de Dossenza ${produto.nome} (R$ ${produto.precos[0].total}).`;
+  const Icon = produto.id === "gastro" ? Droplets : produto.id === "digest" ? Utensils : Waves;
+  const accent = produto.id === "gastro" ? "text-dz-terracota" : produto.id === "digest" ? "text-dz-espinafre" : "text-dz-azeitona";
+  const un = produto.unidade?.[0] ?? "frasco";
+  const msg = `Oi Dossenza! Quero comprar 1 ${un} de Dossenza ${produto.nome} (R$ ${produto.precos[0].total}).`;
   return (
-    <Reveal className="flex flex-col items-center gap-6 rounded-3xl border border-dz-linha bg-white p-6 text-center shadow-[var(--shadow-card)] sm:flex-row sm:text-left md:p-8">
-      <img src={asset(`/products/${produto.id}-1.webp`)} alt={`Dossenza ${produto.nome}`} className="h-40 w-auto shrink-0 object-contain" />
+    <Reveal className="flex flex-col items-center gap-6 rounded-3xl border border-dz-linha bg-white p-6 text-center shadow-[var(--shadow-card)] sm:flex-row sm:text-left md:p-8 lg:flex-col lg:text-center">
+      <div className="flex h-40 w-full shrink-0 items-center justify-center sm:w-44 lg:w-full">
+        <img src={asset(`/products/${produto.id}-1.webp`)} alt={`Dossenza ${produto.nome}`} className="max-h-40 w-auto max-w-full object-contain" />
+      </div>
       <div className="flex-1">
-        <div className={`label-caps flex items-center justify-center gap-2 sm:justify-start ${accent}`}>
-          <Icon className="h-4 w-4" aria-hidden="true" /> Para o {produto.foco}
+        <div className={`label-caps flex items-center justify-center gap-2 sm:justify-start lg:justify-center ${accent}`}>
+          <Icon className="h-4 w-4" aria-hidden="true" /> {produto.focoLabel ?? `Para o ${produto.foco}`}
         </div>
         <h3 className="mt-2 text-2xl font-medium text-dz-espinafre">
           Dossenza <span className={`italic ${accent}`}>{produto.nome}</span>
         </h3>
         <p className="mt-1 text-xs uppercase tracking-[0.12em] text-dz-tinta/55">{produto.apresentacao}</p>
-        <div className="mt-4 flex items-baseline justify-center gap-1 sm:justify-start">
+        <div className="mt-4 flex items-baseline justify-center gap-1 sm:justify-start lg:justify-center">
           <span className="text-sm text-dz-tinta/60">R$</span>
           <span className="font-display text-4xl text-dz-espinafre">{produto.precos[0].total}</span>
-          <span className="ml-1 text-sm text-dz-tinta/60">/ frasco</span>
+          <span className="ml-1 text-sm text-dz-tinta/60">/ {un}</span>
         </div>
         <div className="mt-5 flex flex-col gap-3 sm:flex-row">
           <a href={whatsappUrl(msg)} target="_blank" rel="noreferrer" className={`${BTN.primary} min-h-11 flex-1 px-5`}>
-            Comprar 1 frasco
+            Comprar 1 {un}
           </a>
           <Link to={produto.slug} className={`${BTN.outline} min-h-11 px-5`}>
             Ver detalhes
@@ -330,10 +334,10 @@ function Comprar() {
         <Reveal className="mx-auto max-w-3xl text-center">
           <p className="label-caps text-dz-terracota">Escolha a quantidade</p>
           <h2 className="mt-3 text-4xl font-medium text-dz-espinafre md:text-5xl">
-            Mais frascos, <span className="italic text-dz-terracota">melhor preço.</span>
+            Mais unidades, <span className="italic text-dz-terracota">melhor preço.</span>
           </h2>
         </Reveal>
-        <div className="mt-12 grid items-start gap-6 lg:grid-cols-3">
+        <div className="mt-12 grid items-start gap-6 md:grid-cols-2 xl:grid-cols-4">
           <LojaCard
             tag="Para o estômago"
             icon={Droplets}
@@ -365,6 +369,17 @@ function Comprar() {
             precos={PRODUTOS.entero.precos}
             unidade={["frasco", "frascos"]}
           />
+          <LojaCard
+            tag="Para as refeições"
+            icon={Utensils}
+            accent="text-dz-espinafre"
+            nome="Digest"
+            imagePrefix="digest"
+            meta={PRODUTOS.digest.apresentacao}
+            precos={PRODUTOS.digest.precos}
+            unidade={["caixa", "caixas"]}
+            detalhes="/digest"
+          />
         </div>
 
         <div className="mx-auto mt-10 flex max-w-2xl flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs text-dz-tinta/65">
@@ -394,6 +409,7 @@ function LojaCard({
   precos,
   unidade,
   featured = false,
+  detalhes,
 }: {
   tag: string;
   icon?: ComponentType<{ className?: string; "aria-hidden"?: boolean }>;
@@ -405,6 +421,8 @@ function LojaCard({
   precos: Preco[];
   unidade: [string, string];
   featured?: boolean;
+  /** Link "Ver detalhes" abaixo do botão de compra. */
+  detalhes?: string;
 }) {
   const [i, setI] = useState(precos.length > 1 ? 1 : 0);
   const p = precos[i];
@@ -469,12 +487,22 @@ function LojaCard({
           R$ {fmtBRL(perUnit)} por {unidade[0]}
         </p>
         {p.economia && <p className={`mt-1 text-xs font-semibold ${accent}`}>{p.economia}</p>}
+        {p.frete && (
+          <p className="mt-1 inline-flex items-center gap-1.5 text-xs font-semibold text-dz-espinafre">
+            <Truck className="h-3.5 w-3.5" aria-hidden="true" /> {p.frete}
+          </p>
+        )}
       </div>
 
       <a href={whatsappUrl(msg)} target="_blank" rel="noreferrer" className={`mt-auto ${featured ? BTN.primary : BTN.outline}`}>
         Comprar — R$ {p.total}
         <ArrowRight className="h-4 w-4" aria-hidden="true" />
       </a>
+      {detalhes && (
+        <Link to={detalhes} className="mt-3 text-center text-sm font-semibold text-dz-espinafre underline underline-offset-4 hover:text-dz-terracota">
+          Ver detalhes
+        </Link>
+      )}
       <p className="mt-3 text-center text-[11px] text-dz-tinta/50">Compra finalizada pelo WhatsApp</p>
     </div>
   );

@@ -4,7 +4,7 @@
 export const BASE_URL = "https://dossenza.com.br";
 
 /** Versão dos arquivos de /public — subir quando trocar imagens para furar o cache do navegador. */
-const ASSET_VERSION = "5";
+const ASSET_VERSION = "6";
 
 /** Caminho de arquivo de /public respeitando a base do Vite ("/dossenza/" no GitHub Pages, "/" em domínio próprio). */
 export const asset = (p: string) =>
@@ -47,18 +47,20 @@ export type Preco = {
   unidade: string;
   economia?: string;
   destaque?: "Mais vendido" | "Melhor escolha";
+  /** Ex.: "Frete grátis" (mostrado no card de preço). */
+  frete?: string;
 };
 
 export type ItemComposicao = { nome: string; qtd: string };
 
-export type ProdutoId = "gastro" | "entero";
+export type ProdutoId = "gastro" | "entero" | "digest";
 
 export type Produto = {
   id: ProdutoId;
   slug: string;
   nome: string;
   /** Cor de expressão do produto no MIV. */
-  cor: "terracota" | "azeitona";
+  cor: "terracota" | "azeitona" | "espinafre";
   foco: string; // "estômago" | "intestino"
   tagline: string; // "Enzimas digestivas para o estômago."
   descricao: string;
@@ -73,6 +75,14 @@ export type Produto = {
   image: string;
   imageCutout: string;
   imageAlt: string;
+  /** Ativos em destaque na linha do topo da página (padrão: composição sem excipientes). */
+  ativosLinha?: string[];
+  /** Rótulo do topo da página (padrão: "Para o {foco}"). */
+  focoLabel?: string;
+  /** Título da tabela de composição (padrão: "O que há em cada cápsula."). */
+  composicaoTitulo?: string;
+  /** Unidade de venda no singular/plural (padrão: frasco/frascos). */
+  unidade?: [string, string];
 };
 
 export const PRODUTOS: Record<ProdutoId, Produto> = {
@@ -179,6 +189,68 @@ export const PRODUTOS: Record<ProdutoId, Produto> = {
     image: "/products/entero-card.webp",
     imageCutout: "/products/entero-cutout.webp",
     imageAlt: "Dossenza Entero — frasco com 60 cápsulas gastrorresistentes, rótulo creme e ondas azeitona",
+  },
+  digest: {
+    id: "digest",
+    slug: "/digest",
+    nome: "Digest",
+    cor: "espinafre",
+    foco: "conforto digestivo",
+    focoLabel: "Para acompanhar as refeições",
+    ativosLinha: ["Alcachofra", "Espinheira santa", "Gengibre"],
+    tagline: "Blend de extratos botânicos para o conforto digestivo.",
+    descricao:
+      "Um shot com oito tinturas botânicas, entre elas alcachofra, espinheira santa e gengibre, para acompanhar o almoço e o jantar. Sabor abacaxi.",
+    origem: "Digest: o cuidado com a digestão, no momento da refeição.",
+    apresentacao: "Shot 150 ml · 30 doses",
+    capsula: "Shot líquido",
+    modoUso:
+      "Ingerir 1 shot durante as refeições, 2x ao dia: almoço e jantar. Conservar ao abrigo da luz, calor e umidade. Não exceder a recomendação diária de consumo indicada na embalagem.",
+    beneficios: ["Conforto digestivo", "Extratos botânicos", "Sabor abacaxi"],
+    ativosDestaque: [
+      { nome: "Alcachofra", beneficio: "Planta tradicionalmente associada à digestão de refeições mais pesadas." },
+      { nome: "Espinheira santa", beneficio: "Planta brasileira tradicionalmente usada no cuidado com o estômago." },
+      { nome: "Gengibre", beneficio: "Raiz de uso tradicional no conforto digestivo." },
+      { nome: "Camomila", beneficio: "Flor de uso tradicional, conhecida pelo efeito calmante." },
+    ],
+    composicao: [
+      { nome: "Tintura de alecrim", qtd: "0,12 ml" },
+      { nome: "Tintura de alcachofra", qtd: "0,12 ml" },
+      { nome: "Tintura de alcaçuz", qtd: "0,12 ml" },
+      { nome: "Tintura de camomila", qtd: "0,12 ml" },
+      { nome: "Tintura de dente-de-leão", qtd: "0,12 ml" },
+      { nome: "Tintura de espinheira santa", qtd: "0,12 ml" },
+      { nome: "Tintura de gengibre", qtd: "0,12 ml" },
+      { nome: "Tintura de guaçatonga", qtd: "0,12 ml" },
+      { nome: "Sabor abacaxi", qtd: "q.s." },
+      { nome: "Solução shot q.s.p.", qtd: "5 ml" },
+    ],
+    composicaoTitulo: "O que há em cada shot.",
+    unidade: ["caixa", "caixas"],
+    precos: [
+      { qtd: "1", label: "1 caixa", total: "179,90", unidade: "R$ 179,90 por caixa" },
+      {
+        qtd: "3",
+        label: "3 caixas",
+        total: "489,90",
+        unidade: "R$ 163,30 por caixa",
+        economia: "Economize R$ 49,80",
+        destaque: "Mais vendido",
+        frete: "Frete grátis",
+      },
+      {
+        qtd: "5",
+        label: "5 caixas",
+        total: "769,90",
+        unidade: "R$ 153,98 por caixa",
+        economia: "Economize R$ 129,60",
+        destaque: "Melhor escolha",
+        frete: "Frete grátis",
+      },
+    ],
+    image: "/products/digest-1.webp",
+    imageCutout: "/products/digest-1.webp",
+    imageAlt: "Dossenza Digest — caixa com 30 doses de shot 150 ml, rótulo creme e ondas terracota",
   },
 };
 

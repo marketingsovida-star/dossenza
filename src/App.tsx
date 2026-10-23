@@ -3,6 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-route
 import { HomePage } from "@/pages/home";
 import { GastroPage } from "@/pages/gastro";
 import { EnteroPage } from "@/pages/entero";
+import { DigestPage } from "@/pages/digest";
 import { SacPage } from "@/pages/sac";
 import { LojaPage } from "@/pages/loja";
 import { PharmaPage } from "@/pages/pharma";
@@ -34,6 +35,7 @@ export function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/gastro" element={<GastroPage />} />
         <Route path="/entero" element={<EnteroPage />} />
+        <Route path="/digest" element={<DigestPage />} />
         <Route path="/sac" element={<SacPage />} />
         <Route path="/loja" element={<LojaPage />} />
         <Route path="/pharma" element={<PharmaPage />} />

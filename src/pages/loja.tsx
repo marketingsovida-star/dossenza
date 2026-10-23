@@ -337,7 +337,35 @@ function Comprar() {
             Mais unidades, <span className="italic text-dz-terracota">melhor preço.</span>
           </h2>
         </Reveal>
-        <div className="mt-12 grid items-start gap-6 lg:grid-cols-3">
+        {/* Kits em cima (mesma largura dos cards de baixo), produtos individuais embaixo */}
+        <div className="mx-auto mt-12 grid max-w-[846px] items-start gap-6 lg:grid-cols-2">
+          <LojaCard
+            tag="Sistema completo"
+            accent="text-dz-espinafre"
+            nome="Sistema"
+            sub="Gastro + Entero"
+            imagePrefix="kit"
+            meta="1 Gastro + 1 Entero por sistema"
+            metaPorQtd={(q) => `${q} Gastro + ${q} Entero`}
+            precos={KIT_PRECOS}
+            unidade={["sistema", "sistemas"]}
+            featured
+          />
+          <LojaCard
+            tag="Kit cuidado completo"
+            accent="text-dz-terracota"
+            nome="Cuidado completo"
+            sub="Gastro + Entero + Digest"
+            imagePrefix="kit3p"
+            meta="1 Gastro + 1 Entero + 1 Digest por kit"
+            metaPorQtd={(q) => `${q} Gastro + ${q} Entero + ${q} Digest`}
+            precos={KIT_PRECOS}
+            unidade={["kit", "kits"]}
+            badge="Cuidado completo"
+            emBreve
+          />
+        </div>
+        <div className="mt-6 grid items-start gap-6 lg:grid-cols-3">
           <LojaCard
             tag="Para o estômago"
             icon={Droplets}
@@ -349,17 +377,6 @@ function Comprar() {
             unidade={["frasco", "frascos"]}
           />
           <LojaCard
-            tag="Sistema completo"
-            accent="text-dz-espinafre"
-            nome="Sistema"
-            sub="Gastro + Entero"
-            imagePrefix="kit"
-            meta="1 Gastro + 1 Entero por sistema"
-            precos={KIT_PRECOS}
-            unidade={["sistema", "sistemas"]}
-            featured
-          />
-          <LojaCard
             tag="Para o intestino"
             icon={Waves}
             accent="text-dz-azeitona"
@@ -369,10 +386,6 @@ function Comprar() {
             precos={PRODUTOS.entero.precos}
             unidade={["frasco", "frascos"]}
           />
-        </div>
-        {/* Digest numa linha própria, centralizado, na mesma largura dos cards de cima */}
-        <div className="mt-6 grid items-start gap-6 lg:grid-cols-3">
-          <div className="lg:col-start-2">
           <LojaCard
             tag="Para as refeições"
             icon={Utensils}
@@ -384,7 +397,6 @@ function Comprar() {
             unidade={["caixa", "caixas"]}
             detalhes="/digest"
           />
-          </div>
         </div>
 
         <div className="mx-auto mt-10 flex max-w-2xl flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs text-dz-tinta/65">
@@ -415,6 +427,9 @@ function LojaCard({
   unidade,
   featured = false,
   detalhes,
+  metaPorQtd,
+  badge,
+  emBreve = false,
 }: {
   tag: string;
   icon?: ComponentType<{ className?: string; "aria-hidden"?: boolean }>;
@@ -428,6 +443,12 @@ function LojaCard({
   featured?: boolean;
   /** Link "Ver detalhes" abaixo do botão de compra. */
   detalhes?: string;
+  /** Conteúdo conforme a quantidade escolhida (ex.: "3 Gastro + 3 Entero"). */
+  metaPorQtd?: (qtd: string) => string;
+  /** Selo no topo do card (padrão "Mais escolhido" quando featured). */
+  badge?: string;
+  /** Sem preço: botão desativado "Compra disponível em breve". */
+  emBreve?: boolean;
 }) {
   const [i, setI] = useState(precos.length > 1 ? 1 : 0);
   const p = precos[i];
@@ -442,12 +463,16 @@ function LojaCard({
   return (
     <div
       className={`relative flex flex-col rounded-3xl border bg-white p-6 shadow-[var(--shadow-card)] md:p-7 ${
-        featured ? "border-dz-espinafre ring-4 ring-dz-trigo/35" : "border-dz-linha"
+        featured ? "border-dz-espinafre ring-4 ring-dz-trigo/35" : badge ? "border-dz-terracota ring-4 ring-dz-terracota/20" : "border-dz-linha"
       }`}
     >
-      {featured && (
-        <span className="label-caps absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-dz-trigo px-4 py-1 text-[11px] text-dz-espinafre">
-          Mais escolhido
+      {(featured || badge) && (
+        <span
+          className={`label-caps absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-4 py-1 text-[11px] ${
+            badge ? "bg-dz-terracota text-dz-creme" : "bg-dz-trigo text-dz-espinafre"
+          }`}
+        >
+          {badge ?? "Mais escolhido"}
         </span>
       )}
       <div className={`label-caps flex items-center gap-2 ${accent}`}>
@@ -463,6 +488,11 @@ function LojaCard({
       </h3>
       {sub && <p className="mt-1 text-sm text-dz-tinta/75">{sub}</p>}
       <p className="mt-1 text-xs uppercase tracking-[0.12em] text-dz-tinta/55">{meta}</p>
+      {metaPorQtd && (
+        <p className="mt-2 text-sm font-semibold text-dz-espinafre">
+          {qty === 1 ? "Leva" : "Levando"} {label}: {metaPorQtd(p.qtd)}
+        </p>
+      )}
 
       <div className="mt-5">
         <span className="label-caps text-dz-espinafre/80">Escolha a quantidade</span>
@@ -482,6 +512,12 @@ function LojaCard({
         </div>
       </div>
 
+      {emBreve ? (
+        <div className="my-5 border-y border-dz-linha py-5">
+          <p className="font-display text-3xl text-dz-espinafre">Em breve</p>
+          <p className="mt-2 text-sm text-dz-tinta/60">Preço e compra disponíveis em breve.</p>
+        </div>
+      ) : (
       <div className="my-5 border-y border-dz-linha py-5">
         {qty > 1 && <p className="text-sm text-dz-tinta/50 line-through">R$ {fmtBRL(original)}</p>}
         <div className="flex items-baseline gap-1">
@@ -498,17 +534,24 @@ function LojaCard({
           </p>
         )}
       </div>
+      )}
 
+      {emBreve ? (
+        <button type="button" disabled className={`mt-auto cursor-not-allowed opacity-70 ${BTN.outline}`}>
+          Compra disponível em breve
+        </button>
+      ) : (
       <a href={whatsappUrl(msg)} target="_blank" rel="noreferrer" className={`mt-auto ${featured ? BTN.primary : BTN.outline}`}>
         Comprar — R$ {p.total}
         <ArrowRight className="h-4 w-4" aria-hidden="true" />
       </a>
+      )}
       {detalhes && (
         <Link to={detalhes} className="mt-3 text-center text-sm font-semibold text-dz-espinafre underline underline-offset-4 hover:text-dz-terracota">
           Ver detalhes
         </Link>
       )}
-      <p className="mt-3 text-center text-[11px] text-dz-tinta/50">Compra finalizada pelo WhatsApp</p>
+      {!emBreve && <p className="mt-3 text-center text-[11px] text-dz-tinta/50">Compra finalizada pelo WhatsApp</p>}
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import PharmaWhatsAppButton from "@/components/PharmaWhatsAppButton";
 import { useEffect, useRef, useState } from "react";
 import { FileUp, Headset, MailCheck, PackageCheck } from "lucide-react";
 import { Footer, SiteHeader } from "@/components/dossenza-ui";
@@ -139,7 +140,8 @@ export function PharmaPage() {
       <Footer />
 
 
-      {open && <PharmaModal onClose={() => setOpen(false)} />}
+      <PharmaWhatsAppButton />
+        {open && <PharmaModal onClose={() => setOpen(false)} />}
     </div>
   );
 }

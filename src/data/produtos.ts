@@ -148,7 +148,7 @@ export const PRODUTOS: Record<ProdutoId, Produto> = {
     apresentacao: "60 cápsulas gastrorresistentes",
     capsula: "Cápsulas gastrorresistentes",
     modoUso:
-      "Ingerir 1 cápsula junto com o almoço e 1 cápsula junto com o jantar, ou conforme orientação profissional.",
+      "Ingerir 1 cápsula antes do almoço e 1 cápsula antes do jantar, ou conforme orientação profissional.",
     beneficios: ["Apoio à digestão no intestino", "Seis enzimas e ativos", "Cápsulas gastrorresistentes"],
     ativosDestaque: [
       { nome: "Actinidina", beneficio: "Enzima do kiwi que atua sobre proteínas." },

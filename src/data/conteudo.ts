@@ -34,7 +34,7 @@ export const FAQS = [
   },
   {
     q: "Como devo usar?",
-    a: "Gastro e Entero: ingerir 1 cápsula junto com o almoço e 1 cápsula junto com o jantar, ou conforme orientação profissional.",
+    a: "Gastro: ingerir 1 cápsula junto com o almoço e 1 cápsula junto com o jantar. Entero: ingerir 1 cápsula antes do almoço e 1 cápsula antes do jantar. Ou conforme orientação profissional.",
   },
   {
     q: "O que são cápsulas gastrorresistentes?",

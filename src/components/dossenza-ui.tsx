@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, BadgeCheck, ChevronRight, ShieldCheck, Truck, MessageCircle, Lock, ShoppingBag } from "lucide-react";
 import { Reveal } from "@/components/reveal";
-import { PHARMA_OPCOES, type Preco, type ProdutoId, asset, whatsappUrl } from "@/data/produtos";
+import { PHARMA_OPCOES, type Preco, type ProdutoId, asset, compraUrl } from "@/data/produtos";
 
 export const NAV = [
   { href: "/#produtos", label: "Produtos" },
@@ -192,7 +192,7 @@ export function PriceCards({
               )}
             </div>
             <a
-              href={whatsappUrl(msg)}
+              href={compraUrl(p, msg)}
               target="_blank"
               rel="noreferrer"
               className={`mt-auto ${featured ? BTN.primary : BTN.outline}`}

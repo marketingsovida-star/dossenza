@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Check, Droplets, Plus, ShieldCheck, Truck, Utensils, Waves } from "lucide-react";
 import { Reveal } from "@/components/reveal";
 import { BTN, Footer, PharmaSection, SiteHeader, StickyHeader } from "@/components/dossenza-ui";
-import { PRODUTOS, KIT_PRECOS, asset, compraUrl, type Preco, type Produto } from "@/data/produtos";
+import { PRODUTOS, KIT_PRECOS, COMPLETO_PRECOS, asset, compraUrl, type Preco, type Produto } from "@/data/produtos";
 import { DIFERENCIAIS, FAQS } from "@/data/conteudo";
 import { useHead } from "@/lib/head";
 
@@ -76,7 +76,7 @@ const SLIDES: Slide[] = [
     veil: VEIL_LIGHT,
     tag: "Sistema essencial",
     titulo: "Um sistema. Dois nomes.",
-    sub: "Gastro e Entero juntos, do estômago ao intestino, com preço especial nos combos de 3 e 5.",
+    sub: "Gastro e Entero juntos, do estômago ao intestino, com preço especial nos combos de 2 e 4.",
     cta: "Montar meu sistema",
   },
 ];
@@ -364,10 +364,9 @@ function Comprar() {
             imagePrefix="kit3p"
             meta="1 Gastro + 1 Entero + 1 Digest por sistema"
             metaPorQtd={(q) => `${q} Gastro + ${q} Entero + ${q} Digest`}
-            precos={KIT_PRECOS}
+            precos={COMPLETO_PRECOS}
             unidade={["sistema", "sistemas"]}
             badge="Cuidado completo"
-            emBreve
             alto
             imagemKit="/products/kit3p-row.webp"
             marcadores={[

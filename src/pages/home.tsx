@@ -319,7 +319,7 @@ function Sistema() {
             </h2>
             <p className="mt-5 max-w-xl text-base leading-7 text-dz-tinta/80 md:text-lg">
               A digestão é um caminho: começa no estômago e segue para o intestino. Gastro e Entero foram pensados para
-              acompanhar cada etapa, e juntos têm preços especiais nos combos de 3 e 5.
+              acompanhar cada etapa, e juntos têm preços especiais nos combos de 2 e 4.
             </p>
             <ul className="mt-6 space-y-2">
               {["1 Dossenza Gastro (60 cápsulas vegetais)", "1 Dossenza Entero (60 cápsulas gastrorresistentes)", "Do estômago ao intestino, em um só cuidado"].map((t) => (
@@ -335,10 +335,7 @@ function Sistema() {
         </div>
 
         <div className="mt-14">
-          <PriceCards precos={KIT_PRECOS} produtoNome="Sistema Essencial Dossenza (Gastro + Entero)" imagePrefix="kit" />
-          <p className="mx-auto mt-6 max-w-2xl text-center text-xs text-dz-tinta/55">
-            Valores de referência. A compra é finalizada com nossa equipe pelo WhatsApp.
-          </p>
+          <PriceCards precos={KIT_PRECOS} produtoNome="Sistema Essencial Dossenza (Gastro + Entero)" imagePrefix="kit" imagemFixa="/products/kit-1.webp" />
         </div>
       </div>
     </section>

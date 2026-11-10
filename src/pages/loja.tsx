@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Check, Droplets, Plus, ShieldCheck, Truck, Utensils, Waves } from "lucide-react";
 import { Reveal } from "@/components/reveal";
 import { BTN, Footer, PharmaSection, SiteHeader, StickyHeader } from "@/components/dossenza-ui";
-import { PRODUTOS, KIT_PRECOS, asset, whatsappUrl, type Preco, type Produto } from "@/data/produtos";
+import { PRODUTOS, KIT_PRECOS, asset, compraUrl, type Preco, type Produto } from "@/data/produtos";
 import { DIFERENCIAIS, FAQS } from "@/data/conteudo";
 import { useHead } from "@/lib/head";
 
@@ -314,7 +314,7 @@ function VitrineCard({ produto }: { produto: Produto }) {
           <span className="ml-1 text-sm text-dz-tinta/60">/ {un}</span>
         </div>
         <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-          <a href={whatsappUrl(msg)} target="_blank" rel="noreferrer" className={`${BTN.primary} min-h-11 flex-1 px-5`}>
+          <a href={compraUrl(produto.precos[0], msg)} target="_blank" rel="noreferrer" className={`${BTN.primary} min-h-11 flex-1 px-5`}>
             Comprar 1 {un}
           </a>
           <Link to={produto.slug} className={`${BTN.outline} min-h-11 px-5`}>
@@ -581,7 +581,7 @@ function LojaCard({
           Compra disponível em breve
         </button>
       ) : (
-      <a href={whatsappUrl(msg)} target="_blank" rel="noreferrer" className={`mt-auto ${featured ? BTN.primary : BTN.outline}`}>
+      <a href={compraUrl(p, msg)} target="_blank" rel="noreferrer" className={`mt-auto ${featured ? BTN.primary : BTN.outline}`}>
         Comprar — R$ {p.total}
         <ArrowRight className="h-4 w-4" aria-hidden="true" />
       </a>
@@ -591,7 +591,7 @@ function LojaCard({
           Ver detalhes
         </Link>
       )}
-      {!emBreve && <p className="mt-3 text-center text-[11px] text-dz-tinta/50">Compra finalizada pelo WhatsApp</p>}
+      {!emBreve && !p.checkout && <p className="mt-3 text-center text-[11px] text-dz-tinta/50">Compra finalizada pelo WhatsApp</p>}
     </div>
   );
 }

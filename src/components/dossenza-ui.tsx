@@ -138,17 +138,20 @@ export function StickyHeader({ visible }: { visible: boolean }) {
   );
 }
 
-/* ---------- Grade de preços (sem checkout — leva ao WhatsApp) ---------- */
+/* ---------- Grade de preços (checkout da Payt; WhatsApp se a oferta não tiver checkout) ---------- */
 export function PriceCards({
   precos,
   produtoNome,
   imagePrefix,
   accent,
+  imagemFixa,
 }: {
   precos: Preco[];
   produtoNome: string;
   imagePrefix: string;
   accent?: ProdutoId;
+  /** Mesma imagem em todos os cards (kits com quantidades sem foto própria). */
+  imagemFixa?: string;
 }) {
   const eyebrow = accent ? THEME[accent].text : "text-dz-espinafre";
   return (
@@ -171,7 +174,7 @@ export function PriceCards({
             )}
             <div className="mb-5 flex h-40 items-end justify-center">
               <img
-                src={asset(`/products/${imagePrefix}-${p.qtd}.webp`)}
+                src={asset(imagemFixa ?? `/products/${imagePrefix}-${p.qtd}.webp`)}
                 alt={`${produtoNome} — ${p.label}`}
                 loading="lazy"
                 className="max-h-40 w-auto max-w-full object-contain"

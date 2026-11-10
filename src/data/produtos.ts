@@ -44,7 +44,8 @@ export const PHARMA_SUPABASE_ANON_KEY = "sb_publishable_mTGFgjFGZ3b26MRejMc0rg_z
 export const PHARMA_MARCA = "dossenza";
 
 export type Preco = {
-  qtd: "1" | "3" | "5";
+  /** Quantidade da oferta, igual ao kit do MurALL (ex.: "1", "2", "3", "4", "5"). */
+  qtd: string;
   label: string;
   total: string;
   unidade: string;
@@ -118,22 +119,32 @@ export const PRODUTOS: Record<ProdutoId, Produto> = {
       { nome: "Excipiente q.s.p.", qtd: "1 dose" },
     ],
     precos: [
-      { qtd: "1", label: "1 frasco", total: "139,90", unidade: "R$ 139,90 por frasco", checkout: "https://checkout.payt.com.br/cdd74dff03e31b39cfc336417d586443" },
+      {
+        qtd: "1",
+        label: "1 frasco",
+        total: "139,90",
+        unidade: "R$ 139,90 por frasco",
+        checkout: "https://checkout.payt.com.br/cdd74dff03e31b39cfc336417d586443",
+      },
       {
         qtd: "3",
         label: "3 frascos",
-        total: "314,90",
-        unidade: "R$ 104,97 por frasco",
-        economia: "Economize R$ 104,80",
+        total: "379,90",
+        unidade: "R$ 126,63 por frasco",
+        economia: "Economize R$ 39,80",
         destaque: "Mais vendido",
+        frete: "Frete grátis",
+        checkout: "https://checkout.payt.com.br/29a9f6efaffd3c604a752ae9097f9219",
       },
       {
         qtd: "5",
         label: "5 frascos",
-        total: "503,90",
-        unidade: "R$ 100,78 por frasco",
-        economia: "Economize R$ 195,60",
+        total: "589,90",
+        unidade: "R$ 117,98 por frasco",
+        economia: "Economize R$ 109,60",
         destaque: "Melhor escolha",
+        frete: "Frete grátis",
+        checkout: "https://checkout.payt.com.br/7d37b1e28cc6d243e327135870e53a89",
       },
     ],
     image: "/products/gastro-card.webp",
@@ -173,22 +184,32 @@ export const PRODUTOS: Record<ProdutoId, Produto> = {
       { nome: "Excipiente q.s.p.", qtd: "1 dose" },
     ],
     precos: [
-      { qtd: "1", label: "1 frasco", total: "184,90", unidade: "R$ 184,90 por frasco" },
+      {
+        qtd: "1",
+        label: "1 frasco",
+        total: "189,90",
+        unidade: "R$ 189,90 por frasco",
+        checkout: "https://checkout.payt.com.br/3941f6efccee15425281c0fbf05a2475",
+      },
       {
         qtd: "3",
         label: "3 frascos",
-        total: "416,90",
-        unidade: "R$ 138,97 por frasco",
-        economia: "Economize R$ 137,80",
+        total: "539,90",
+        unidade: "R$ 179,97 por frasco",
+        economia: "Economize R$ 29,80",
         destaque: "Mais vendido",
+        frete: "Frete grátis",
+        checkout: "https://checkout.payt.com.br/b4dd56974416f81c5048d36199d07439",
       },
       {
         qtd: "5",
         label: "5 frascos",
-        total: "665,90",
-        unidade: "R$ 133,18 por frasco",
-        economia: "Economize R$ 258,60",
+        total: "849,90",
+        unidade: "R$ 169,98 por frasco",
+        economia: "Economize R$ 99,60",
         destaque: "Melhor escolha",
+        frete: "Frete grátis",
+        checkout: "https://checkout.payt.com.br/b6cd95d53810282d6a734fbb073e9479",
       },
     ],
     image: "/products/entero-card.webp",
@@ -261,23 +282,65 @@ export const PRODUTOS: Record<ProdutoId, Produto> = {
   },
 };
 
-// Sistema Essencial = Gastro + Entero (preço = soma das faixas individuais)
+// Preços e quantidades = MurALL (fonte oficial); links = checkouts já cadastrados na Payt.
+// Sistema Essencial = "Kit Gastrointestinal" no MurALL e na Payt (Gastro + Entero, kits de 1, 2 e 4).
 export const KIT_PRECOS: Preco[] = [
-  { qtd: "1", label: "1 sistema", total: "324,80", unidade: "1 Gastro + 1 Entero" },
+  {
+    qtd: "1",
+    label: "1 sistema",
+    total: "329,90",
+    unidade: "1 Gastro + 1 Entero",
+    checkout: "https://checkout.payt.com.br/8c1d2a7aae65830ace0cf3c93a3b4817",
+  },
+  {
+    qtd: "2",
+    label: "2 sistemas",
+    total: "619,80",
+    unidade: "2 Gastro + 2 Entero",
+    economia: "Economize R$ 40,00",
+    destaque: "Mais vendido",
+    frete: "Frete grátis",
+    checkout: "https://checkout.payt.com.br/330fbc6c60f6925f8e8419c97e254e6c",
+  },
+  {
+    qtd: "4",
+    label: "4 sistemas",
+    total: "1.189,90",
+    unidade: "4 Gastro + 4 Entero",
+    economia: "Economize R$ 129,70",
+    destaque: "Melhor escolha",
+    frete: "Frete grátis",
+    checkout: "https://checkout.payt.com.br/1a167de8bba4eb951cbc111830816011",
+  },
+];
+
+// Sistema Completo = Gastro + Entero + Digest (kits de 1, 3 e 5).
+export const COMPLETO_PRECOS: Preco[] = [
+  {
+    qtd: "1",
+    label: "1 sistema",
+    total: "479,90",
+    unidade: "1 Gastro + 1 Entero + 1 Digest",
+    checkout: "https://checkout.payt.com.br/c5137bee9aba34b22aa2d9eecde2277b",
+  },
   {
     qtd: "3",
     label: "3 sistemas",
-    total: "731,80",
-    unidade: "3 Gastro + 3 Entero",
-    economia: "Economize R$ 242,60",
+    total: "1.349,90",
+    unidade: "3 Gastro + 3 Entero + 3 Digest",
+    economia: "Economize R$ 89,80",
     destaque: "Mais vendido",
+    frete: "Frete grátis",
+    checkout: "https://checkout.payt.com.br/29d61ac6e4d3ca883625c528ab9f5dd6",
   },
   {
     qtd: "5",
     label: "5 sistemas",
-    total: "1.169,80",
-    unidade: "5 Gastro + 5 Entero",
-    economia: "Economize R$ 454,20",
+    total: "2.099,90",
+    unidade: "5 Gastro + 5 Entero + 5 Digest",
+    economia: "Economize R$ 299,60",
     destaque: "Melhor escolha",
+    frete: "Frete grátis",
+    checkout: "https://checkout.payt.com.br/4dffe574c7f80f34d45fe15e85b5d371",
   },
 ];

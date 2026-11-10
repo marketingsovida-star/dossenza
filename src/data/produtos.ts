@@ -17,6 +17,9 @@ export const WHATSAPP_DISPLAY = "(00) 00000-0000";
 export const whatsappUrl = (msg: string) =>
   `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
 
+/** Link de compra da oferta: checkout da Payt quando cadastrado, senão WhatsApp com a mensagem pronta. */
+export const compraUrl = (preco: Preco, msg: string) => preco.checkout ?? whatsappUrl(msg);
+
 /* ---------- SAC (página /sac) ---------- */
 // TODO: e-mail que recebe os chamados (usado no fallback por e-mail e no texto da página).
 export const SAC_EMAIL = "sac@dossenza.com.br";
@@ -49,6 +52,8 @@ export type Preco = {
   destaque?: "Mais vendido" | "Melhor escolha";
   /** Ex.: "Frete grátis" (mostrado no card de preço). */
   frete?: string;
+  /** Checkout da Payt desta oferta. Só preencher se o preço na Payt for igual a `total`. */
+  checkout?: string;
 };
 
 export type ItemComposicao = { nome: string; qtd: string };
@@ -113,7 +118,7 @@ export const PRODUTOS: Record<ProdutoId, Produto> = {
       { nome: "Excipiente q.s.p.", qtd: "1 dose" },
     ],
     precos: [
-      { qtd: "1", label: "1 frasco", total: "139,90", unidade: "R$ 139,90 por frasco" },
+      { qtd: "1", label: "1 frasco", total: "139,90", unidade: "R$ 139,90 por frasco", checkout: "https://checkout.payt.com.br/cdd74dff03e31b39cfc336417d586443" },
       {
         qtd: "3",
         label: "3 frascos",
@@ -228,11 +233,12 @@ export const PRODUTOS: Record<ProdutoId, Produto> = {
     composicaoTitulo: "O que há em cada shot.",
     unidade: ["caixa", "caixas"],
     precos: [
-      { qtd: "1", label: "1 caixa", total: "179,90", unidade: "R$ 179,90 por caixa" },
+      { qtd: "1", label: "1 caixa", total: "179,90", unidade: "R$ 179,90 por caixa", checkout: "https://checkout.payt.com.br/2944d10af098324c7b70294afd1da5e2" },
       {
         qtd: "3",
         label: "3 caixas",
         total: "489,90",
+        checkout: "https://checkout.payt.com.br/a72a9d570e49d6bd5896596330d7f6ee",
         unidade: "R$ 163,30 por caixa",
         economia: "Economize R$ 49,80",
         destaque: "Mais vendido",
@@ -242,6 +248,7 @@ export const PRODUTOS: Record<ProdutoId, Produto> = {
         qtd: "5",
         label: "5 caixas",
         total: "769,90",
+        checkout: "https://checkout.payt.com.br/51f993d243a0d38e4669ac0bc3f8df05",
         unidade: "R$ 153,98 por caixa",
         economia: "Economize R$ 129,60",
         destaque: "Melhor escolha",

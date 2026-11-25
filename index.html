@@ -2,6 +2,165 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
+<script>
+/* Atribuição de origem — versão canônica do Maestro (cerebro/_estilo/snippet-atribuicao-origem.md).
+   NÃO adicionar payt.com.br/cdn/queryparameters.js junto: derrubou a LP do AURYN. */
+(function () {
+  try {
+    if (typeof window === 'undefined' || typeof document === 'undefined') return; // SSR: sai limpo
+
+    var CAMPOS = ['src', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+    var CHAVE = 'atribuicao_origem';
+
+    var qs = new URLSearchParams(location.search);
+    var daUrl = {};
+    CAMPOS.forEach(function (k) {
+      var v = qs.get(k);
+      if (v) daUrl[k] = String(v).slice(0, 120);
+    });
+
+    var salvo = {};
+    try { salvo = JSON.parse(sessionStorage.getItem(CHAVE) || '{}') || {}; } catch (e) {}
+
+    var origem;
+    if (salvo && salvo.src) {
+      origem = salvo;              // a 1ª origem da sessão manda: retorno não vira "direto"
+    } else if (daUrl.src) {
+      origem = daUrl;
+    } else {
+      origem = daUrl;
+      var ref = document.referrer || '';
+      var host = '';
+      try { host = ref ? new URL(ref).hostname.replace(/^www\./, '') : ''; } catch (e) {}
+      // navegar entre rotas da própria LP NÃO é origem nova
+      if (host && host === location.hostname.replace(/^www\./, '')) { host = ''; ref = ''; }
+      if (!ref) origem.src = 'direto';
+      else if (/(^|\.)google\./.test(host)) origem.src = 'google-organico';
+      else if (/(bing|duckduckgo|yahoo|ecosia)\./.test(host)) origem.src = 'busca-outros';
+      else if (/instagram|ig\.me/.test(host)) origem.src = 'instagram';
+      else if (/facebook|fb\.(me|com)/.test(host)) origem.src = 'facebook';
+      else if (/whatsapp|wa\.me/.test(host)) origem.src = 'whatsapp';
+      else if (/manychat|mnch|m\.me/.test(host)) origem.src = 'manychat';
+      else origem.src = ('ref-' + host).slice(0, 120);
+      if (!origem.utm_source && host) origem.utm_source = host;
+    }
+
+    try { sessionStorage.setItem(CHAVE, JSON.stringify(origem)); } catch (e) {}
+    window.__origemMaestro = origem;
+
+    // ── Sinais de tracking: fbclid / _fbp / _ga ───────────────────────────────
+    // Não são origem e não entram no relatório. São o que deixa a CAPI casar a venda com
+    // o CLIQUE no anúncio e o GA4 costurar com a sessão que navegou. Sem eles, e-mail e
+    // telefone identificam a PESSOA mas não de onde ela veio: a correspondência da Meta
+    // cai e toda compra entra como (direct) no GA4. Medido em 18/11/2026 no CellulitFree.
+    // `fbclid` chega pela URL; `_fbp` e `_ga` só existem em COOKIE — por isso são lidos
+    // na hora do clique, nunca aqui: o pixel e o gtag gravam o cookie DEPOIS deste script.
+    var CHAVE_FBCLID = 'fbclid_maestro';
+    try {
+      var fbclidUrl = qs.get('fbclid');
+      if (fbclidUrl) sessionStorage.setItem(CHAVE_FBCLID, String(fbclidUrl).slice(0, 400));
+    } catch (e) {}
+
+    function cookieMaestro(nome) {
+      try {
+        var m = document.cookie.match(new RegExp('(^|;\\s*)' + nome + '=([^;]*)'));
+        return m ? decodeURIComponent(m[2]) : '';
+      } catch (e) { return ''; }
+    }
+
+    window.__sinaisTracking = function () {
+      var s = {};
+      try {
+        var fb = sessionStorage.getItem(CHAVE_FBCLID) || qs.get('fbclid') || '';
+        if (fb) s.fbclid = String(fb).slice(0, 400);
+      } catch (e) {}
+      var fbp = cookieMaestro('_fbp'); if (fbp) s._fbp = String(fbp).slice(0, 400);
+      var ga = cookieMaestro('_ga');   if (ga)  s._ga = String(ga).slice(0, 400);
+      return s;
+    };
+
+
+    // Botão que abre checkout por JS passa por aqui. Sempre com fallback pra URL original.
+    window.__comOrigem = function (url) {
+      try {
+        var u = new URL(url, location.href);
+        CAMPOS.forEach(function (k) {
+          if (origem[k] && !u.searchParams.get(k)) u.searchParams.set(k, origem[k]);
+        });
+        // Sinais lidos AGORA, não no load: cookie de pixel costuma nascer depois.
+        try {
+          var sinais = window.__sinaisTracking ? window.__sinaisTracking() : {};
+          Object.keys(sinais).forEach(function (k) {
+            if (!u.searchParams.get(k)) u.searchParams.set(k, sinais[k]);
+          });
+        } catch (e) {}
+        return u.toString();
+      } catch (e) { return url; }
+    };
+
+    // Link <a> é carimbado no load, quando o cookie do pixel pode ainda não existir.
+    // Este listener re-carimba no clique, que é quando o cookie certamente já está lá.
+    // Captura (true) pra rodar antes de qualquer handler da página.
+    try {
+      document.addEventListener('click', function (ev) {
+        try {
+          var a = ev.target && ev.target.closest && ev.target.closest('a[href]');
+          if (!a || !/payt\.(site|com\.br)/.test(a.getAttribute('href') || '')) return;
+          if (!carimbavel(a)) return;
+          var novo = window.__comOrigem(a.getAttribute('href'));
+          if (novo && novo !== a.getAttribute('href')) a.setAttribute('href', novo);
+        } catch (e) {}
+      }, true);
+    } catch (e) {}
+
+    function carimbavel(a) {
+      // NUNCA tocar no widget one-click da Payt: ele reaproveita o MESMO pedido, que já
+      // carrega a origem, e mexer ali é o único jeito de quebrar a venda.
+      return a && !a.hasAttribute('payt_element') && !(a.closest && a.closest('[payt_element]'));
+    }
+
+    function carimbar() {
+      try {
+        var alvos = document.querySelectorAll('a[href*="payt.site"], a[href*="payt.com.br"]');
+        for (var i = 0; i < alvos.length; i++) {
+          var a = alvos[i];
+          if (!carimbavel(a)) continue;
+          var novo = window.__comOrigem(a.getAttribute('href'));
+          if (novo && novo !== a.getAttribute('href')) a.setAttribute('href', novo);
+        }
+      } catch (e) {}
+    }
+
+    carimbar();
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', carimbar);
+
+    if (window.MutationObserver) {
+      var agendado = false;
+      new MutationObserver(function () {
+        if (agendado) return;
+        agendado = true;
+        // setTimeout e NÃO requestAnimationFrame: rAF não roda em aba de segundo plano,
+        // e a trava ficaria presa em true — o carimbo morreria pelo resto da visita.
+        setTimeout(function () { agendado = false; carimbar(); }, 50);
+      }).observe(document.documentElement, {
+        childList: true, subtree: true,
+        // React troca o href DEPOIS de montar o link; sem isto a troca passa batido.
+        attributes: true, attributeFilter: ['href']
+      });
+    }
+
+    // Rede de segurança: reaplica no instante do clique, antes da navegação.
+    document.addEventListener('click', function (ev) {
+      try {
+        var a = ev.target && ev.target.closest && ev.target.closest('a[href*="payt"]');
+        if (!a || !carimbavel(a)) return;
+        var novo = window.__comOrigem(a.getAttribute('href'));
+        if (novo && novo !== a.getAttribute('href')) a.setAttribute('href', novo);
+      } catch (e) {}
+    }, true);
+  } catch (e) {}
+})();
+</script>
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-NHRVB24K');</script>
     <!-- End Google Tag Manager -->
